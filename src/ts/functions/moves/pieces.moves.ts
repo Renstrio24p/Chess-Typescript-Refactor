@@ -314,6 +314,7 @@ export const GetKingsMoves = (startingSquareId: string, Colorpiece: string) => {
     let FileCurrent = file,
         RankCurrent = rankNumber;
     
+    // the king only moves 1 square at a time
     const moves = [
         [0,1],[0,-1],[1,1],[1,-1],[-1,-1],[-1,1],[1,0],[-1,0]
     ]
