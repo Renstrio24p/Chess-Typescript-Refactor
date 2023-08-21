@@ -1,6 +1,7 @@
-import { GetBishopsMoves, GetCastleMoves, GetKingsMoves, GetKnightMoves, GetPawnMoves, GetQueensMoves } from './moves/pieces.moves';
+import { GetBishopsMoves, GetCastleMoves, GetKingsMoves, GetKnightMoves, GetPawnMoves, GetQueensMoves } from "./moves/pieces.moves";
 
-export function getPossibleMoves(startingSquareId: string, piece: any ) {
+
+export function getPossibleMoves(startingSquareId: string, piece: any,SquareBoardsArray: any ) {
     const ColorPiece = piece.getAttribute('color');
     if(piece.classList.contains('pawn')){
         GetPawnMoves(startingSquareId,ColorPiece);

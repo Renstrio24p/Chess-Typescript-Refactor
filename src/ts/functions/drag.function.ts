@@ -1,9 +1,10 @@
-import styles from '../../sass/modules/app.module.scss';
 import { LegalSquares } from './moves.function';
 import { getPossibleMoves } from './possibleMoves.function';
 import { isSquareOccupied } from './squares.function';
 
 let isWhiteTurn = true;
+
+const SquareBoardsArray: any[] = []
 
 // Set Draggable Drop to prevent from reset.
 
@@ -19,7 +20,7 @@ export function Drag(e: DragEvent){
     if ((isWhiteTurn && ColorPiece == 'white') || (!isWhiteTurn && ColorPiece == 'black')) {
         e.dataTransfer?.setData('text', piece.id);
         const startingSquares = piece.parentNode.id;
-        getPossibleMoves(startingSquares, piece);
+        getPossibleMoves(startingSquares, piece, SquareBoardsArray);
     }
 }
 

@@ -3,22 +3,21 @@ import { isSquareOccupied } from "../squares.function";
 
 // Pawn's Moves
 
-export const GetPawnMoves = (startingSquareId: string, Colorpiece: string,SquareBoardsArray: any) => {
-    checkDiagonalCaptures(startingSquareId, Colorpiece,SquareBoardsArray);
+export const GetPawnMoves = (startingSquareId: string, Colorpiece: string) => {
+    checkDiagonalCaptures(startingSquareId, Colorpiece);
     checkMoveForwardMoves(startingSquareId, Colorpiece);
 };
 
-function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string, SquareBoardsArray: any) {
+function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string) {
     const file = startingSquareId.charAt(0),
         rank = startingSquareId.charAt(1),
         rankNumber = parseInt(rank);
-
     const Direction = ColorPiece === 'white' ? 1 : -1;
-
     for (let i = -1; i <= 1; i += 2) {
         const fileOffset = file.charCodeAt(0) + i;
         if (fileOffset >= 'a'.charCodeAt(0) && fileOffset <= 'h'.charCodeAt(0)) {
-            let SquareCurrent = SquareBoardsArray.find((element:any)=> element.squareID === squareID)
+            const targetSquareID = String.fromCharCode(fileOffset) + (rankNumber + Direction);
+            const targetSquare = document.getElementById(targetSquareID) as HTMLDivElement;
             if (targetSquare) {
                 const contentSquare = isSquareOccupied(targetSquare);
                 if (contentSquare !== 'blank' && contentSquare !== ColorPiece) {
@@ -27,7 +26,6 @@ function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string, Squ
             }
         }
     }
-    return LegalSquares;
 }
 
 function checkMoveForwardMoves(startingSquareId: string, ColorPiece: string) {
@@ -300,6 +298,7 @@ export const GetQueensMoves = (startingSquareId: string, Colorpiece: string) => 
     moveTo1stRank(startingSquareId, Colorpiece);
     moveToAnAisle(startingSquareId, Colorpiece);
     moveToHFile(startingSquareId, Colorpiece);
+
 
 
 }
