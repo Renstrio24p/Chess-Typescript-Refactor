@@ -1,18 +1,21 @@
 import styles from '../../sass/modules/app.module.scss';
 import { AllowDrop, Drag, Drop } from './drag.function';
 
-export let LegalSquares: string[] = [],
-    SquareBoardsArray: string[] = [];
+export let LegalSquares: string[] = [];
 
 export const BoardSquares = document.getElementsByClassName(`${styles.square}`) as any,
     pieces = document.getElementsByClassName(`${styles.piece}`) as any,
     ImagePiece = document.getElementsByTagName('img') as any;
 
-let color = '',
+export let color = '',
     TypesPiece = '',
-    PiecesID = '';
+    PiecesID = '',
+    squareID = '';
 
-
+export let 
+        row: number,
+        column: string,
+        square: any;
 
 export default function Moves() {
 
@@ -21,7 +24,7 @@ export default function Moves() {
     FillBoardofSquaresArray();
 
     interface SquareInfo {
-        squareID: string;
+        squareID: any;
         ColorPiece: string;
         TypesPiece: string;
         PiecesID: string;
@@ -29,33 +32,31 @@ export default function Moves() {
     
     const SquareBoardsArray: SquareInfo[] = []; // Initialize as an empty array of SquareInfo objects
     
-    function FillBoardofSquaresArray() {
-        for (let i = 0; i < BoardSquares.length; i++) {
-            let row = 8 - Math.floor(i / 8),
-                column = String.fromCharCode(97 + (i % 8)),
-                square = BoardSquares[i];
-    
+    function FillBoardofSquaresArray(){
+        for(let i = 0; i < BoardSquares.length; i++){
+            row = 8 - Math.floor(i/8);
+            column = String.fromCharCode(97+(i%8));
+            square = BoardSquares[i];
             square.id = column + row;
-            let color, TypesPiece, PiecesID;
-    
-            if (square.querySelector(`.${styles.piece}`)) {
-                color = square.querySelector(`.${styles.piece}`).getAttribute('color');
-                TypesPiece = square.querySelector(`.${styles.piece}`).classList[1];
-                PiecesID = square.querySelector(`.${styles.piece}`).id;
+
+            if(square.querySelector(`.${styles.piece}`)){
+                color = square.querySelector(`.${styles.piece}`)?.getAttribute('color') || '';
+                TypesPiece = square.querySelector(`.${styles.piece}`)?.classList[1] || '';
+                PiecesID = square.querySelector(`.${styles.piece}`).id || '';
             } else {
                 color = 'blank';
                 TypesPiece = 'blank';
                 PiecesID = 'blank';
             }
-    
-            let ArraysOfElements: SquareInfo = {
+
+            let ElementsArray : SquareInfo = {
                 squareID: square.id,
-                ColorPiece: color,
-                TypesPiece: TypesPiece,
-                PiecesID: PiecesID
-            };
-    
-            SquareBoardsArray.push(ArraysOfElements);
+                ColorPiece : color,
+                TypesPiece : TypesPiece,
+                PiecesID : PiecesID
+            }
+
+            SquareBoardsArray.push(ElementsArray);
         }
     }
     

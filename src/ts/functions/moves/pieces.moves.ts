@@ -1,14 +1,14 @@
-import { LegalSquares } from "../moves.function";
+import { LegalSquares, square, squareID } from "../moves.function";
 import { isSquareOccupied } from "../squares.function";
 
 // Pawn's Moves
 
-export const GetPawnMoves = (startingSquareId: string, Colorpiece: string) => {
-    checkDiagonalCaptures(startingSquareId, Colorpiece);
+export const GetPawnMoves = (startingSquareId: string, Colorpiece: string,SquareBoardsArray: any) => {
+    checkDiagonalCaptures(startingSquareId, Colorpiece,SquareBoardsArray);
     checkMoveForwardMoves(startingSquareId, Colorpiece);
 };
 
-function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string) {
+function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string, SquareBoardsArray: any) {
     const file = startingSquareId.charAt(0),
         rank = startingSquareId.charAt(1),
         rankNumber = parseInt(rank);
@@ -18,8 +18,7 @@ function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string) {
     for (let i = -1; i <= 1; i += 2) {
         const fileOffset = file.charCodeAt(0) + i;
         if (fileOffset >= 'a'.charCodeAt(0) && fileOffset <= 'h'.charCodeAt(0)) {
-            const targetSquareID = String.fromCharCode(fileOffset) + (rankNumber + Direction);
-            const targetSquare = document.getElementById(targetSquareID) as HTMLDivElement;
+            let SquareCurrent = SquareBoardsArray.find((element:any)=> element.squareID === squareID)
             if (targetSquare) {
                 const contentSquare = isSquareOccupied(targetSquare);
                 if (contentSquare !== 'blank' && contentSquare !== ColorPiece) {
@@ -28,6 +27,7 @@ function checkDiagonalCaptures(startingSquareId: string, ColorPiece: string) {
             }
         }
     }
+    return LegalSquares;
 }
 
 function checkMoveForwardMoves(startingSquareId: string, ColorPiece: string) {
@@ -314,6 +314,7 @@ export const GetKingsMoves = (startingSquareId: string, Colorpiece: string) => {
     let FileCurrent = file,
         RankCurrent = rankNumber;
     
+    // the king only moves 1 square at a time
     const moves = [
         [0,1],[0,-1],[1,1],[1,-1],[-1,-1],[-1,1],[1,0],[-1,0]
     ]
